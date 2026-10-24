@@ -718,12 +718,8 @@
     transition: none !important
   }
 
-  /* Sem retenção do hero para quem prefere reduzir movimento. */
-  .hero {
-    position: relative;
-    top: auto;
-  }
-
+  /* A sobreposição sticky acompanha a rolagem do usuário e permanece ativa.
+     Somente animações e rolagem automática são desativadas neste modo. */
   .reveal.waiting {
     opacity: 1;
     transform: none
