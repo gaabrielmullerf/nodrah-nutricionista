@@ -8,6 +8,7 @@
   --muted: #6c6259;
   --rule: #d9d0c5;
   --serif: 'Cormorant Garamond', Georgia, serif;
+  --header-height: 101px;
   --sans: 'Manrope', Arial, sans-serif
 }
 
@@ -125,7 +126,7 @@ p {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(248, 246, 242, .97);
+  background: var(--paper);
   border-bottom: 1px solid var(--rule)
 }
 
@@ -238,7 +239,10 @@ nav>a:hover {
   grid-template-columns: 1.08fr 1fr;
   gap: 6%;
   padding-top: 55px;
-  position: relative;
+  position: sticky;
+  top: var(--hero-sticky-top, var(--header-height));
+  z-index: 0;
+  min-height: calc(100svh - var(--header-height));
   padding-bottom: 78px;
   align-items: center
 }
@@ -631,7 +635,7 @@ nav>a:hover {
 }
 
 .check-list li:before {
-  content: '↗';
+  content: '·';
   color: #8d735b;
   margin-right: 14px
 }
@@ -971,4 +975,43 @@ dialog .button {
 /* 19. Garante que itens opcionais ocultos não sejam exibidos por outras regras. */
 [hidden] {
   display: none !important
+}
+
+/* 20. Rolagem em camadas. O main delimita o sticky; a camada posterior é opaca.
+   Não aplicar overflow/transform ao main: isso altera o comportamento do sticky. */
+main {
+  isolation: isolate;
+}
+
+.page-content {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+}
+
+/* 21. WhatsApp integrado ao cabeçalho. O contato usa o mesmo data-book dos CTAs. */
+.header-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px 16px;
+  flex-shrink: 0;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: var(--beige);
+  color: var(--brown);
+  font-size: 11px;
+  transition: background .2s, border-color .2s;
+}
+
+.header-whatsapp:hover {
+  background: var(--sand);
+  border-color: #a68e76;
+}
+
+.whatsapp-icon {
+  flex-shrink: 0;
 }

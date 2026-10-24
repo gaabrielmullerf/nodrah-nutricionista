@@ -5,7 +5,7 @@ window.PROFESSIONAL_CONFIG = Object.freeze({
 
   // Identidade e localização: aplicadas aos elementos com data-config no HTML.
   brand: 'HELENA VASCONCELOS',
-  city: 'Brasília — DF',
+  city: 'Brasília, DF',
   address: 'A definir na versão da profissional',
   hours: 'A consultar após configurar o contato',
 

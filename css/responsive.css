@@ -79,6 +79,34 @@
 
 /* Adaptação para max-width:900px: ajusta grades, medidas e navegação nesta faixa. */
 @media(max-width:900px) {
+  :root {
+    --header-height: 83px;
+  }
+
+  .header-inner {
+    gap: 12px;
+  }
+
+  .header .brand {
+    margin-right: auto;
+  }
+
+  .header-whatsapp {
+    order: 1;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+  }
+
+  .header-whatsapp span {
+    display: none;
+  }
+
+  .menu-toggle {
+    order: 2;
+    flex-shrink: 0;
+  }
+
   .header-inner {
     height: 82px
   }
@@ -214,6 +242,14 @@
 
 /* Adaptação para max-width:640px: ajusta grades, medidas e navegação nesta faixa. */
 @media(max-width:640px) {
+  :root {
+    --header-height: 77px;
+  }
+
+  .header-inner {
+    gap: 6px;
+  }
+
   html {
     scroll-padding-top: 95px
   }
@@ -680,6 +716,12 @@
   *:after {
     animation: none !important;
     transition: none !important
+  }
+
+  /* Sem retenção do hero para quem prefere reduzir movimento. */
+  .hero {
+    position: relative;
+    top: auto;
   }
 
   .reveal.waiting {

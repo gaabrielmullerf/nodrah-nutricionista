@@ -42,6 +42,23 @@
   });
   window.matchMedia('(min-width: 901px)').addEventListener('change', closeMenu);
 
+  // Apenas mede o hero ao redimensionar. A rolagem e a sobreposição são CSS.
+  // Se o conteúdo superar a tela (mobile/zoom), deixa mostrar tudo antes de reter.
+  const hero = document.querySelector('.hero');
+  const header = document.querySelector('.header');
+  function updateHeroInset() {
+    const viewportHeight = window.innerHeight;
+    const top = Math.min(header.offsetHeight, viewportHeight - hero.offsetHeight);
+    hero.style.setProperty('--hero-sticky-top', `${top}px`);
+  }
+  updateHeroInset();
+  if ('ResizeObserver' in window) {
+    const heroObserver = new ResizeObserver(updateHeroInset);
+    heroObserver.observe(hero);
+    heroObserver.observe(header);
+  }
+  window.addEventListener('resize', updateHeroInset, { passive: true });
+
   // Agendamento: aceita um número internacional configurado ou usa o modal demonstrativo.
   const dialog = document.querySelector('#booking-dialog');
   const number = String(config.whatsapp || '').replace(/\D/g, '');
