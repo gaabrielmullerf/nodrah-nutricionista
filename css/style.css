@@ -1,0 +1,974 @@
+/* 01. Identidade: paleta e famílias tipográficas reutilizadas via var(--nome). */
+:root {
+  --paper: #f8f6f2;
+  --beige: #eae3d9;
+  --sand: #d6c6b3;
+  --brown: #40352e;
+  --ink: #292622;
+  --muted: #6c6259;
+  --rule: #d9d0c5;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Manrope', Arial, sans-serif
+}
+
+/* 02. Base: caixa, rolagem, textos, imagens e foco por teclado. */
+* {
+  box-sizing: border-box
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 110px
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.85
+}
+
+a {
+  color: inherit;
+  text-decoration: none
+}
+
+button {
+  font: inherit;
+  cursor: pointer
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--brown);
+  outline-offset: 5px
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover
+}
+
+figure,
+p,
+h1,
+h2,
+h3 {
+  margin: 0
+}
+
+p+p {
+  margin-top: 20px
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.07
+}
+
+h1 {
+  font-size: clamp(48px, 4.5vw, 76px);
+  letter-spacing: -2px
+}
+
+h2 {
+  font-size: clamp(40px, 3.8vw, 60px);
+  letter-spacing: -1.4px
+}
+
+h3 {
+  font-size: 30px
+}
+
+em {
+  font-weight: 400;
+  color: #88715b
+}
+
+p {
+  color: var(--muted)
+}
+
+/* 03. Estrutura: largura máxima e espaçamento padrão entre seções. */
+.container {
+  width: min(1240px, calc(100% - 112px));
+  margin-inline: auto
+}
+
+.section {
+  padding-block: 110px
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 2.1px;
+  font-weight: 600;
+  color: #75634f;
+  line-height: 1.6;
+  margin-bottom: 24px
+}
+
+/* 04. Cabeçalho sticky, marca, navegação e botões. */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(248, 246, 242, .97);
+  border-bottom: 1px solid var(--rule)
+}
+
+.header-inner {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0
+}
+
+.brand strong {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 1.3px;
+  display: block;
+  line-height: 1.6
+}
+
+.brand small {
+  display: block;
+  font-size: 7px;
+  letter-spacing: 3px;
+  line-height: 2
+}
+
+.monogram {
+  font-family: var(--serif);
+  font-size: 44px;
+  letter-spacing: -9px;
+  line-height: 1;
+  position: relative;
+  display: block;
+  width: 48px;
+  font-style: italic
+}
+
+.monogram span {
+  position: absolute;
+  font-size: 16px;
+  top: -7px;
+  right: 1px;
+  letter-spacing: 0
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 30px
+}
+
+nav>a {
+  font-size: 11px
+}
+
+nav>a:not(.button) {
+  border-bottom: 1px solid transparent
+}
+
+nav>a:hover {
+  border-color: var(--brown)
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  background: var(--brown);
+  color: #fff;
+  padding: 18px 25px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid var(--brown);
+  min-height: 52px;
+  transition: background .2s, transform .2s
+}
+
+.button span {
+  font-size: 20px;
+  line-height: 1
+}
+
+.button:hover {
+  background: #5c4b3e;
+  transform: translateY(-2px)
+}
+
+.button-small {
+  padding: 13px 18px;
+  min-height: 44px;
+  gap: 25px
+}
+
+.menu-toggle {
+  display: none
+}
+
+/* 05. Abertura: composição em colunas, retrato e legenda sobreposta. */
+.hero {
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
+  gap: 6%;
+  padding-top: 55px;
+  position: relative;
+  padding-bottom: 78px;
+  align-items: center
+}
+
+.hero-copy {
+  padding-block: 20px
+}
+
+.hero .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px
+}
+
+.line {
+  width: 30px;
+  height: 1px;
+  background: #a48a70
+}
+
+.hero h1 {
+  max-width: 590px
+}
+
+.hero .intro {
+  font-size: 13px;
+  max-width: 410px;
+  margin-top: 28px;
+  margin-bottom: 28px;
+  line-height: 1.95
+}
+
+.location {
+  font-size: 10px;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap
+}
+
+.location>span:first-child {
+  font-size: 18px;
+  margin-right: 3px
+}
+
+.hero-note {
+  display: flex;
+  gap: 17px;
+  align-items: center;
+  margin-top: 38px
+}
+
+.hero-note>span {
+  font-size: 40px;
+  font-family: var(--serif);
+  color: #9c856c
+}
+
+.hero-note p {
+  font-size: 11px;
+  line-height: 1.7
+}
+
+.hero-note strong {
+  font-weight: 500;
+  color: var(--brown)
+}
+
+.hero-photo {
+  height: 620px;
+  position: relative;
+  background: var(--beige);
+  border-radius: 180px 0 0 0;
+  isolation: isolate
+}
+
+.hero-photo>img {
+  border-radius: inherit;
+  object-position: center 36%
+}
+
+.hero-photo:after {
+  content: '';
+  position: absolute;
+  inset: 15px -15px -15px 15px;
+  border: 1px solid #b9a58d;
+  border-radius: 180px 0 0 0;
+  z-index: -1
+}
+
+.hero-photo figcaption {
+  position: absolute;
+  bottom: 36px;
+  left: -35px;
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 19px 25px;
+  box-shadow: 0 5px 25px #40352e08;
+  font-family: var(--serif);
+  font-size: 21px;
+  line-height: 1.4
+}
+
+.hero-photo figcaption small {
+  display: block;
+  font: 7px var(--sans);
+  letter-spacing: 1.5px;
+  margin-top: 7px
+}
+
+.caption-mark {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 39px;
+  letter-spacing: -6px;
+  border-right: 1px solid var(--rule);
+  padding-right: 20px
+}
+
+.photo-label {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  font-size: 6px;
+  letter-spacing: 1.2px;
+  color: var(--brown);
+  background: #f8f6f2c9;
+  padding: 4px 8px
+}
+
+.discover {
+  position: absolute;
+  bottom: 19px;
+  left: 0;
+  font-size: 8px;
+  letter-spacing: 1.6px;
+  display: flex;
+  gap: 22px;
+  align-items: center
+}
+
+.discover span {
+  font-size: 20px
+}
+
+/* 06. Faixa de valores e conexão com as necessidades do público. */
+.values-strip {
+  border-block: 1px solid var(--rule);
+  background: #efeae2;
+  padding: 22px 0
+}
+
+.values-strip>.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px
+}
+
+.values-strip span {
+  font-size: 10px;
+  letter-spacing: .5px
+}
+
+.values-strip i {
+  color: #947c63;
+  font-size: 21px;
+  font-style: normal
+}
+
+.connection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10%
+}
+
+.connection h2 {
+  margin-bottom: 25px
+}
+
+.connection-list {
+  padding-top: 12px
+}
+
+.connection-list>p {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 12px;
+  margin: 0
+}
+
+.connection-list>p>span {
+  font-family: var(--serif);
+  font-size: 24px;
+  color: #92795f
+}
+
+.small-note {
+  font-size: 11px;
+  color: #75634f;
+  margin-top: 22px
+}
+
+/* 07. Abordagem: introdução centralizada e três pilares de cuidado. */
+.approach {
+  background: var(--beige)
+}
+
+.section-heading {
+  text-align: center;
+  max-width: 670px;
+  margin: 0 auto 60px
+}
+
+.section-heading>p:last-child {
+  max-width: 500px;
+  margin: 25px auto 0
+}
+
+.approach-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr)
+}
+
+.approach-grid article {
+  padding: 15px 40px;
+  border-left: 1px solid #c9bdae
+}
+
+.approach-grid article:first-child {
+  padding-left: 0;
+  border-left: 0
+}
+
+.approach-grid article:last-child {
+  padding-right: 0
+}
+
+.large-number {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #8d735b;
+  margin-bottom: 25px
+}
+
+.approach-grid h3 {
+  font-size: 34px;
+  margin-bottom: 22px
+}
+
+.approach-grid p {
+  font-size: 12px
+}
+
+/* 08. Títulos em duas colunas e grade de especialidades. */
+.split-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 50px;
+  margin-bottom: 55px
+}
+
+.split-heading>p {
+  max-width: 300px;
+  font-size: 12px
+}
+
+.specialties {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr)
+}
+
+.specialties article {
+  border-top: 1px solid var(--rule);
+  padding: 30px 30px 35px 0;
+  margin-right: 35px
+}
+
+.specialties article:nth-child(3n) {
+  margin-right: 0
+}
+
+.specialties article>span {
+  font-size: 10px;
+  color: #8c7158;
+  display: block;
+  margin-bottom: 20px
+}
+
+.specialties h3 {
+  font-size: 29px;
+  margin-bottom: 18px
+}
+
+.specialties p {
+  font-size: 12px
+}
+
+/* 09. Atendimento: fundo escuro e etapas numeradas. */
+.journey {
+  background: var(--brown);
+  color: var(--paper)
+}
+
+.journey .eyebrow {
+  color: #d0bfa9
+}
+
+.journey em {
+  color: #d6c6b3
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 35px
+}
+
+.steps article {
+  border-top: 1px solid #766656;
+  padding-top: 25px
+}
+
+.steps article>span {
+  font-family: var(--serif);
+  font-size: 43px;
+  color: var(--sand)
+}
+
+.steps h3 {
+  font-size: 26px;
+  margin: 22px 0 15px
+}
+
+.steps p {
+  color: #d1c8bf;
+  font-size: 12px
+}
+
+/* 10. Acompanhamento: imagem de alimentos e lista de recursos. */
+.personalized {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9%;
+  align-items: center
+}
+
+.still-life {
+  height: 540px;
+  position: relative;
+  background: var(--beige)
+}
+
+.still-life img {
+  object-position: center
+}
+
+.image-credit {
+  position: absolute;
+  bottom: 12px;
+  left: 15px;
+  background: #f8f6f2dc;
+  padding: 4px 8px;
+  font-size: 6px;
+  letter-spacing: 1.2px
+}
+
+.personalized h2 {
+  margin-bottom: 25px
+}
+
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin: 23px 0
+}
+
+.check-list li {
+  font-size: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule)
+}
+
+.check-list li:before {
+  content: '↗';
+  color: #8d735b;
+  margin-right: 14px
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 35px;
+  border-bottom: 1px solid #a68e76;
+  padding-block: 7px;
+  font-size: 11px
+}
+
+.text-link span {
+  font-size: 21px
+}
+
+.text-link:hover {
+  color: #896b4b
+}
+
+/* 11. Cenários ilustrativos: citações e identificação explícita. */
+.experiences {
+  background: #eee8df
+}
+
+.quotes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 55px
+}
+
+.quotes figure {
+  border-top: 1px solid #cdbfaf;
+  padding-top: 20px
+}
+
+.quote-mark {
+  font-family: var(--serif);
+  font-size: 70px;
+  line-height: 1;
+  color: #9b836a
+}
+
+.quotes blockquote {
+  font-family: var(--serif);
+  font-size: 29px;
+  line-height: 1.4;
+  margin: 0 0 30px
+}
+
+.quotes figcaption {
+  font-size: 9px;
+  letter-spacing: 1.3px;
+  color: var(--brown)
+}
+
+.quotes figcaption small {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 0;
+  color: var(--muted);
+  margin-top: 7px
+}
+
+/* 12. Profissional: retrato, apresentação e aviso de identidade fictícia. */
+.about {
+  display: grid;
+  grid-template-columns: .9fr 1fr;
+  gap: 12%;
+  align-items: center
+}
+
+.about-photo {
+  height: 580px;
+  position: relative;
+  padding: 20px 0 0 20px
+}
+
+.about-photo:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 85%;
+  height: 90%;
+  border: 1px solid #bca68e;
+  z-index: -1
+}
+
+.about h2 {
+  margin-bottom: 25px
+}
+
+.lead {
+  font-family: var(--serif);
+  font-size: 25px;
+  line-height: 1.4;
+  color: var(--brown);
+  margin-bottom: 20px
+}
+
+.about p:not(.eyebrow, .lead, .disclosure) {
+  font-size: 12px
+}
+
+.signature {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 32px;
+  margin: 22px 0;
+  color: #8b745e
+}
+
+.disclosure {
+  font-size: 9px !important;
+  line-height: 1.8;
+  border-top: 1px solid var(--rule);
+  padding-top: 15px
+}
+
+/* 13. Localização: informações editáveis e espaço demonstrativo para mapa. */
+.location-section {
+  background: var(--beige)
+}
+
+.location-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12%;
+  align-items: center
+}
+
+.location-grid h2 {
+  margin-bottom: 25px
+}
+
+.location-grid>div>p:not(.eyebrow) {
+  max-width: 380px;
+  margin-bottom: 20px
+}
+
+.location-card {
+  background: var(--paper);
+  padding: 40px
+}
+
+.location-card h3 {
+  font-size: 40px
+}
+
+.location-card dl {
+  margin-top: 25px
+}
+
+.location-card dl>div {
+  padding: 13px 0;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 15px;
+  font-size: 10px
+}
+
+.location-card dt {
+  color: var(--muted)
+}
+
+.location-card dd {
+  margin: 0
+}
+
+.map-placeholder {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  background: #eee9e1;
+  padding: 15px;
+  font-size: 22px;
+  margin-top: 15px !important;
+  margin-bottom: 0 !important
+}
+
+.map-placeholder span {
+  font-size: 11px;
+  line-height: 1.6
+}
+
+.map-placeholder small {
+  font-size: 9px
+}
+
+/* 14. Convite final e indicação do estado do agendamento. */
+.final-cta {
+  text-align: center;
+  background: var(--brown);
+  color: var(--paper)
+}
+
+.final-cta .eyebrow {
+  color: var(--sand)
+}
+
+.final-cta em {
+  color: var(--sand)
+}
+
+.final-cta p:not(.eyebrow) {
+  color: #d5cbc0;
+  margin: 25px 0
+}
+
+.button-light {
+  background: var(--paper);
+  color: var(--brown);
+  border-color: var(--paper)
+}
+
+.button-light:hover {
+  background: var(--beige)
+}
+
+.booking-note {
+  display: block;
+  font-size: 9px;
+  color: #d5cbc0;
+  margin-top: 18px
+}
+
+/* 15. Rodapé: contatos, links, créditos e aviso de projeto conceitual. */
+.footer-top {
+  padding-block: 55px;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px
+}
+
+.footer-top>div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 10px;
+  color: var(--muted)
+}
+
+.footer-action {
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  color: inherit;
+  font-size: 10px
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--rule);
+  padding-block: 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 8px
+}
+
+.footer-bottom strong {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--brown)
+}
+
+.footer-bottom p {
+  margin: 0
+}
+
+/* 16. Acessibilidade: atalho que aparece ao receber foco pelo teclado. */
+.skip {
+  position: fixed;
+  top: -100px;
+  left: 15px;
+  background: var(--brown);
+  color: #fff;
+  padding: 12px;
+  z-index: 99
+}
+
+.skip:focus {
+  top: 10px
+}
+
+/* 17. Modal nativo: agendamento demonstrativo e fundo de sobreposição. */
+dialog {
+  border: 1px solid var(--rule);
+  padding: 45px;
+  max-width: 560px;
+  width: calc(100% - 32px);
+  background: var(--paper);
+  color: var(--ink)
+}
+
+dialog::backdrop {
+  background: #29262299;
+  backdrop-filter: blur(4px)
+}
+
+dialog h2 {
+  font-size: 43px;
+  margin-bottom: 20px
+}
+
+dialog p:not(.eyebrow) {
+  font-size: 12px
+}
+
+dialog .button {
+  margin-top: 25px
+}
+
+.dialog-close {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  border: 0;
+  background: none;
+  font-size: 28px;
+  color: var(--brown)
+}
+
+/* 18. Entrada progressiva: o JavaScript remove waiting quando o elemento entra na tela. */
+.reveal {
+  transition: opacity .65s, transform .65s
+}
+
+.reveal.waiting {
+  opacity: 0;
+  transform: translateY(18px)
+}
+
+/* 19. Garante que itens opcionais ocultos não sejam exibidos por outras regras. */
+[hidden] {
+  display: none !important
+}
