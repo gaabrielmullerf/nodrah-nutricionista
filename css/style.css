@@ -392,28 +392,72 @@ nav>a:hover {
 }
 
 /* 06. Faixa de valores e conexão com as necessidades do público. */
+/* Faixa contínua: cada grupo cobre a tela e o percurso equivale a um grupo.
+   Ajuste 65s para mudar a velocidade; um número maior deixa a rolagem mais lenta. */
 .values-strip {
+  position: relative;
+  overflow: hidden;
   border-block: 1px solid var(--rule);
   background: #efeae2;
-  padding: 22px 0
+  padding: 22px 0;
 }
 
-.values-strip>.container {
+.values-track {
+  display: flex;
+  width: max-content;
+  animation: values-scroll 65s linear infinite;
+}
+
+.values-group {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 15px
+  justify-content: space-around;
+  flex-shrink: 0;
+  min-width: max(100vw, 1000px);
+  gap: 32px;
+  padding-inline: 32px;
 }
 
 .values-strip span {
   font-size: 10px;
-  letter-spacing: .5px
+  letter-spacing: .5px;
+  white-space: nowrap;
 }
 
 .values-strip i {
   color: #947c63;
   font-size: 21px;
-  font-style: normal
+  font-style: normal;
+}
+
+.values-pause {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: 44px;
+  min-height: 44px;
+  padding: 6px 9px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: #efeae2;
+  color: var(--brown);
+  font-size: 9px;
+}
+
+.values-strip.is-paused .values-track {
+  animation-play-state: paused;
+}
+
+@media (hover: hover) {
+  .values-strip:hover .values-track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes values-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 .connection {

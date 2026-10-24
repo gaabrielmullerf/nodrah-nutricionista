@@ -383,19 +383,8 @@
     padding: 20px 0
   }
 
-  .values-strip>.container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 13px 10px;
-    text-align: center
-  }
-
   .values-strip span {
     font-size: 9px
-  }
-
-  .values-strip i {
-    display: none
   }
 
   .connection {
@@ -723,5 +712,28 @@
   .reveal.waiting {
     opacity: 1;
     transform: none
+  }
+}
+
+/* Sem rolagem automática quando o dispositivo solicita movimento reduzido.
+   Exibe todos os textos uma única vez, com quebra de linha em telas estreitas. */
+@media (prefers-reduced-motion: reduce) {
+  .values-track {
+    width: 100%;
+    animation: none;
+  }
+
+  .values-group {
+    min-width: 0;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    padding-inline: 24px;
+  }
+
+  .values-group[aria-hidden="true"],
+  .values-group i,
+  .values-pause {
+    display: none;
   }
 }

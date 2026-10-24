@@ -59,6 +59,16 @@
   }
   window.addEventListener('resize', updateHeroInset, { passive: true });
 
+  // Controle da faixa: permite interromper a rolagem automática a qualquer momento.
+  const valuesStrip = document.querySelector('.values-strip');
+  const valuesPause = document.querySelector('.values-pause');
+  valuesPause.addEventListener('click', () => {
+    const paused = valuesStrip.classList.toggle('is-paused');
+    valuesPause.setAttribute('aria-pressed', String(paused));
+    valuesPause.setAttribute('aria-label', paused ? 'Retomar rolagem da faixa' : 'Pausar rolagem da faixa');
+    valuesPause.textContent = paused ? 'Retomar' : 'Pausar';
+  });
+
   // Agendamento: aceita um número internacional configurado ou usa o modal demonstrativo.
   const dialog = document.querySelector('#booking-dialog');
   const number = String(config.whatsapp || '').replace(/\D/g, '');
