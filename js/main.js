@@ -130,9 +130,8 @@
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const reveals = [...document.querySelectorAll('.reveal')];
   const panels = [connection, ...layers];
-  let revealTimer;
   let revealFrame;
-  function updateReveals(allowEntry) {
+  function updateReveals() {
     const viewport = window.innerHeight;
     const upperEdge = header.getBoundingClientRect().bottom;
     const bounds = panels.map(panel => panel.getBoundingClientRect());
@@ -147,22 +146,18 @@
       const lowerEdge = index >= 0 && bounds[index + 1]
         ? Math.min(viewport, bounds[index + 1].top) : viewport;
       const visible = Math.max(0, Math.min(rect.bottom, lowerEdge) - Math.max(rect.top, upperEdge));
-      const needed = Math.min(el.offsetHeight, viewport - upperEdge) * .5;
-      const settled = index < 0 || bounds[index].top <= upperEdge + (viewport - upperEdge) * .3;
-      if (visible < needed || !settled) el.classList.add('waiting');
-      else if (allowEntry) el.classList.remove('waiting');
+      const needed = Math.min(24, el.offsetHeight * .1);
+      el.classList.toggle('waiting', visible < needed);
     });
   }
   function scheduleReveals() {
     if (!revealFrame) revealFrame = requestAnimationFrame(() => {
-      updateReveals(false);
+      updateReveals();
       revealFrame = null;
     });
-    clearTimeout(revealTimer);
-    revealTimer = setTimeout(() => updateReveals(true), 140);
   }
-  updateReveals(true);
+  updateReveals();
   window.addEventListener('scroll', scheduleReveals, { passive: true });
   window.addEventListener('resize', scheduleReveals, { passive: true });
-  motion.addEventListener('change', () => updateReveals(true));
+  motion.addEventListener('change', updateReveals);
 })();
