@@ -251,16 +251,11 @@ nav>a:hover {
   padding-block: 20px
 }
 
-.hero .eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 12px
-}
-
-.line {
-  width: 30px;
-  height: 1px;
-  background: #a48a70
+.development-credit {
+  margin-bottom: 24px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 1px
 }
 
 .hero h1 {
@@ -460,6 +455,51 @@ nav>a:hover {
   to { transform: translateX(-50%); }
 }
 
+.connection-section {
+  position: sticky;
+  top: var(--connection-sticky-top, var(--header-height));
+  z-index: 0;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--paper)
+}
+
+.after-connection {
+  position: relative;
+  z-index: 1;
+  background: var(--paper)
+}
+
+.section-layer {
+  position: relative;
+  background: var(--paper);
+  isolation: isolate;
+}
+
+.section-layer.video-layer {
+  position: sticky;
+  top: var(--video-layer-top, var(--header-height));
+  overflow: hidden;
+}
+
+.connection-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .16;
+  filter: saturate(.55);
+  pointer-events: none;
+  z-index: -1
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .connection-video {
+    display: none
+  }
+}
+
 .connection {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -615,13 +655,33 @@ nav>a:hover {
 
 .steps article {
   border-top: 1px solid #766656;
-  padding-top: 25px
+  padding: 25px 18px 22px;
+  border-radius: 0 0 14px 14px;
+  transition: opacity .8s ease, transform .45s ease, background .35s ease, border-color .35s ease, box-shadow .35s ease
+}
+
+@media (hover: hover) {
+  .steps article:hover {
+    transform: translateY(-8px);
+    background: #ffffff0d;
+    border-top-color: var(--sand);
+    box-shadow: 0 18px 32px #211a1826
+  }
+
+  .steps article:hover>span {
+    color: #fff4e5
+  }
+
+  .steps article:hover p {
+    color: var(--paper)
+  }
 }
 
 .steps article>span {
   font-family: var(--serif);
   font-size: 43px;
-  color: var(--sand)
+  color: var(--sand);
+  transition: color .35s ease
 }
 
 .steps h3 {
@@ -631,7 +691,8 @@ nav>a:hover {
 
 .steps p {
   color: #d1c8bf;
-  font-size: 12px
+  font-size: 12px;
+  transition: color .35s ease
 }
 
 /* 10. Acompanhamento: imagem de alimentos e lista de recursos. */
@@ -746,6 +807,10 @@ nav>a:hover {
 }
 
 /* 12. Profissional: retrato, apresentação e aviso de identidade fictícia. */
+.about-layer {
+  background: var(--beige)
+}
+
 .about {
   display: grid;
   grid-template-columns: .9fr 1fr;
@@ -803,7 +868,7 @@ nav>a:hover {
 
 /* 13. Localização: informações editáveis e espaço demonstrativo para mapa. */
 .location-section {
-  background: var(--beige)
+  background: var(--paper)
 }
 
 .location-grid {
@@ -1006,14 +1071,19 @@ dialog .button {
   color: var(--brown)
 }
 
-/* 18. Entrada progressiva: o JavaScript remove waiting quando o elemento entra na tela. */
+/* 18. Entrada e saída suaves, repetidas conforme a visibilidade na rolagem. */
 .reveal {
-  transition: opacity .65s, transform .65s
+  transition: opacity .8s ease, transform .8s ease
 }
 
 .reveal.waiting {
   opacity: 0;
   transform: translateY(18px)
+}
+
+.reveal:focus-within {
+  opacity: 1;
+  transform: none
 }
 
 /* 19. Garante que itens opcionais ocultos não sejam exibidos por outras regras. */

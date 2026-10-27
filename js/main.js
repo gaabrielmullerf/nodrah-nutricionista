@@ -42,19 +42,28 @@
   });
   window.matchMedia('(min-width: 901px)').addEventListener('change', closeMenu);
 
-  // Apenas mede o hero ao redimensionar. A rolagem e a sobreposição são CSS.
+  // Mede as seções retidas ao redimensionar. A sobreposição acompanha a rolagem via CSS.
   // Se o conteúdo superar a tela (mobile/zoom), deixa mostrar tudo antes de reter.
   const hero = document.querySelector('.hero');
+  const connection = document.querySelector('.connection-section');
+  const videoLayer = document.querySelector('.video-layer');
+  const layers = [...document.querySelectorAll('.section-layer')];
   const header = document.querySelector('.header');
   function updateHeroInset() {
     const viewportHeight = window.innerHeight;
     const top = Math.min(header.offsetHeight, viewportHeight - hero.offsetHeight);
     hero.style.setProperty('--hero-sticky-top', `${top}px`);
+    const connectionTop = Math.min(header.offsetHeight, viewportHeight - connection.offsetHeight);
+    connection.style.setProperty('--connection-sticky-top', `${connectionTop}px`);
+    const videoTop = Math.min(header.offsetHeight, viewportHeight - videoLayer.offsetHeight);
+    videoLayer.style.setProperty('--video-layer-top', `${videoTop}px`);
   }
   updateHeroInset();
   if ('ResizeObserver' in window) {
     const heroObserver = new ResizeObserver(updateHeroInset);
     heroObserver.observe(hero);
+    heroObserver.observe(connection);
+    heroObserver.observe(videoLayer);
     heroObserver.observe(header);
   }
   window.addEventListener('resize', updateHeroInset, { passive: true });
@@ -117,19 +126,43 @@
     /* Sem rede social configurada. */
   }
 
-  // Entradas sutis: respeita movimento reduzido e mantém conteúdo visível sem suporte ao observador.
-  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.remove('waiting');
-        observer.unobserve(entry.target);
+  // Considera também a seção seguinte, que pode estar cobrindo a camada sticky.
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const reveals = [...document.querySelectorAll('.reveal')];
+  const panels = [connection, ...layers];
+  let revealTimer;
+  let revealFrame;
+  function updateReveals(allowEntry) {
+    const viewport = window.innerHeight;
+    const upperEdge = header.getBoundingClientRect().bottom;
+    const bounds = panels.map(panel => panel.getBoundingClientRect());
+    reveals.forEach(el => {
+      if (motion.matches) {
+        el.classList.remove('waiting');
+        return;
       }
-    }), {
-      threshold: 0.08
-    });
-    document.querySelectorAll('.reveal').forEach(el => {
-      el.classList.add('waiting');
-      observer.observe(el);
+      const panel = el.closest('.section-layer, .connection-section');
+      const index = panels.indexOf(panel);
+      const rect = el.getBoundingClientRect();
+      const lowerEdge = index >= 0 && bounds[index + 1]
+        ? Math.min(viewport, bounds[index + 1].top) : viewport;
+      const visible = Math.max(0, Math.min(rect.bottom, lowerEdge) - Math.max(rect.top, upperEdge));
+      const needed = Math.min(el.offsetHeight, viewport - upperEdge) * .5;
+      const settled = index < 0 || bounds[index].top <= upperEdge + (viewport - upperEdge) * .3;
+      if (visible < needed || !settled) el.classList.add('waiting');
+      else if (allowEntry) el.classList.remove('waiting');
     });
   }
+  function scheduleReveals() {
+    if (!revealFrame) revealFrame = requestAnimationFrame(() => {
+      updateReveals(false);
+      revealFrame = null;
+    });
+    clearTimeout(revealTimer);
+    revealTimer = setTimeout(() => updateReveals(true), 140);
+  }
+  updateReveals(true);
+  window.addEventListener('scroll', scheduleReveals, { passive: true });
+  window.addEventListener('resize', scheduleReveals, { passive: true });
+  motion.addEventListener('change', () => updateReveals(true));
 })();
