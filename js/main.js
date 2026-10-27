@@ -42,28 +42,19 @@
   });
   window.matchMedia('(min-width: 901px)').addEventListener('change', closeMenu);
 
-  // Mede as seções retidas ao redimensionar. A sobreposição acompanha a rolagem via CSS.
+  // Somente a abertura fica retida para a segunda seção avançar sobre ela.
   // Se o conteúdo superar a tela (mobile/zoom), deixa mostrar tudo antes de reter.
   const hero = document.querySelector('.hero');
-  const connection = document.querySelector('.connection-section');
-  const videoLayer = document.querySelector('.video-layer');
-  const layers = [...document.querySelectorAll('.section-layer')];
   const header = document.querySelector('.header');
   function updateHeroInset() {
     const viewportHeight = window.innerHeight;
     const top = Math.min(header.offsetHeight, viewportHeight - hero.offsetHeight);
     hero.style.setProperty('--hero-sticky-top', `${top}px`);
-    const connectionTop = Math.min(header.offsetHeight, viewportHeight - connection.offsetHeight);
-    connection.style.setProperty('--connection-sticky-top', `${connectionTop}px`);
-    const videoTop = Math.min(header.offsetHeight, viewportHeight - videoLayer.offsetHeight);
-    videoLayer.style.setProperty('--video-layer-top', `${videoTop}px`);
   }
   updateHeroInset();
   if ('ResizeObserver' in window) {
     const heroObserver = new ResizeObserver(updateHeroInset);
     heroObserver.observe(hero);
-    heroObserver.observe(connection);
-    heroObserver.observe(videoLayer);
     heroObserver.observe(header);
   }
   window.addEventListener('resize', updateHeroInset, { passive: true });
@@ -126,26 +117,20 @@
     /* Sem rede social configurada. */
   }
 
-  // Considera também a seção seguinte, que pode estar cobrindo a camada sticky.
+  // As demais seções seguem o fluxo normal, com entrada e saída discretas.
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const reveals = [...document.querySelectorAll('.reveal')];
-  const panels = [connection, ...layers];
   let revealFrame;
   function updateReveals() {
     const viewport = window.innerHeight;
     const upperEdge = header.getBoundingClientRect().bottom;
-    const bounds = panels.map(panel => panel.getBoundingClientRect());
     reveals.forEach(el => {
       if (motion.matches) {
         el.classList.remove('waiting');
         return;
       }
-      const panel = el.closest('.section-layer, .connection-section');
-      const index = panels.indexOf(panel);
       const rect = el.getBoundingClientRect();
-      const lowerEdge = index >= 0 && bounds[index + 1]
-        ? Math.min(viewport, bounds[index + 1].top) : viewport;
-      const visible = Math.max(0, Math.min(rect.bottom, lowerEdge) - Math.max(rect.top, upperEdge));
+      const visible = Math.max(0, Math.min(rect.bottom, viewport) - Math.max(rect.top, upperEdge));
       const needed = Math.min(24, el.offsetHeight * .1);
       el.classList.toggle('waiting', visible < needed);
     });

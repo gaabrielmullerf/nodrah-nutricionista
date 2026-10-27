@@ -456,8 +456,7 @@ nav>a:hover {
 }
 
 .connection-section {
-  position: sticky;
-  top: var(--connection-sticky-top, var(--header-height));
+  position: relative;
   z-index: 0;
   isolation: isolate;
   overflow: hidden;
@@ -474,12 +473,6 @@ nav>a:hover {
   position: relative;
   background: var(--paper);
   isolation: isolate;
-}
-
-.section-layer.video-layer {
-  position: sticky;
-  top: var(--video-layer-top, var(--header-height));
-  overflow: hidden;
 }
 
 .connection-video {
